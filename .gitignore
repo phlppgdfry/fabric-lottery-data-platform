@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Data
+data-generator/output/
+*.csv
+*.parquet
+!data-generator/samples/*.csv
+
+# dbt
+dbt/target/
+dbt/dbt_packages/
+dbt/logs/
+
+# OS
+.DS_Store
+
+# Secrets
+.env
+*.env.local
