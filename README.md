@@ -1,5 +1,8 @@
 # Fabric Lottery Data Platform
 
+> **Nederlands leren met deze repo:** [Start de leergids](docs/leren/README.md) — code stap voor stap, vaardigheden, oefeningen met antwoorden, herhaalkaarten en je eigen leerlogboek.
+> **Huidige status:** generator en SQL-ontwerp aanwezig; Fabric-pipelines, notebooks, Power BI, dbt en CI/CD zijn nog niet geïmplementeerd. De onderstaande architectuur beschrijft mede het beoogde eindbeeld.
+
 An end-to-end data engineering platform built on Microsoft Fabric, demonstrating:
 
 - Microsoft Fabric (OneLake, Lakehouse, Pipelines, Notebooks)
