@@ -1,0 +1,25 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  pipeline:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements-dev.txt
+      - name: Tests (generator + Bronze/Silver/Gold on DuckDB)
+        run: pytest -q tests
+      - name: Full-size run with injected faults
+        run: |
+          python data-generator/generate_data.py --dirty-rate 0.01 --output-dir /tmp/lottery
+          python local/pipeline.py --input /tmp/lottery --summary /tmp/summary.json > /dev/null
+          python -c "import json; s=json.load(open('/tmp/summary.json')); l=s['layers']; assert l['bronze_transactions']==l['silver_transactions']+l['rejected'] and s['orphan_fact_keys']==0, s; print(l)"

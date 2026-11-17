@@ -21,3 +21,8 @@ dbt/logs/
 # Secrets
 .env
 *.env.local
+
+# Local pipeline outputs
+local/*.duckdb
+local/*.duckdb.wal
+local/summary.json

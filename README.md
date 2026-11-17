@@ -1,7 +1,7 @@
 # Fabric Lottery Data Platform
 
 > **Nederlands leren met deze repo:** [Start de leergids](docs/leren/README.md) — code stap voor stap, vaardigheden, oefeningen met antwoorden, herhaalkaarten en je eigen leerlogboek.
-> **Huidige status:** generator en SQL-ontwerp aanwezig; Fabric-pipelines, notebooks, Power BI, dbt en CI/CD zijn nog niet geïmplementeerd. De onderstaande architectuur beschrijft mede het beoogde eindbeeld.
+> **Huidige status:** generator, SQL-ontwerp en een lokale Bronze → Silver → Gold-pipeline op DuckDB met tests en CI zijn aanwezig. Fabric-pipelines, PySpark-notebooks, Power BI en dbt zijn nog niet geïmplementeerd. De architectuur hieronder beschrijft mede het beoogde eindbeeld.
 
 An end-to-end data engineering platform built on Microsoft Fabric, demonstrating:
 
@@ -58,17 +58,42 @@ notebooks/          PySpark notebooks: bronze ingestion, silver transform, gold 
 sql/                DDL and reference queries for the data model
 dbt/                staging / intermediate / marts models + tests
 pipelines/           Fabric pipeline definitions and orchestration notes
-tests/              data quality tests
+local/              Bronze -> Silver -> Gold on DuckDB (runs today, no Fabric needed)
+tests/              end-to-end and data quality tests for generator + local pipeline
 powerbi/            semantic model notes / exports
 ci-cd/              CI/CD pipeline definitions (GitHub Actions / Azure DevOps)
 docs/               data-model, medallion architecture, performance, monitoring, security
 ```
 
+## Run it locally (no Fabric workspace needed)
+
+```bash
+python3 -m venv .venv && source .venv/bin/activate
+pip install -r requirements-dev.txt
+
+# synthetic data with 1% injected source faults (duplicates, bad amounts, unknown keys, bad timestamps)
+python data-generator/generate_data.py --dirty-rate 0.01
+
+# Bronze -> Silver -> Gold on DuckDB, with a JSON summary
+python local/pipeline.py --db local/lottery.duckdb --summary local/summary.json
+pytest -q tests
+```
+
+On the default 100,000 transactions with `--dirty-rate 0.01`: 100,185 Bronze rows become
+99,173 Silver rows and 1,012 rejects, each with a reason; every Gold fact key resolves to a
+dimension. The same seed always produces the same files.
+
 ## Status
 
-Early scaffold — following a 10-week build plan from fundamentals (SQL, data
-modelling) through Fabric, PySpark, dbt, orchestration, CI/CD, and production
-engineering (monitoring, security, data quality).
+| Part | State |
+| --- | --- |
+| Synthetic generator (seeded, optional fault injection) | done |
+| Star schema DDL and reference queries | done |
+| Local Bronze/Silver/Gold on DuckDB, quality rules, tests, CI | done |
+| Fabric Lakehouse, PySpark notebooks, Fabric pipelines | not started (waiting for a Fabric workspace) |
+| dbt models, Power BI semantic model, deployment pipelines | not started |
+
+Showcase: <https://phlppgdfry.github.io/fabric-lottery-data-platform/>
 
 ## Why this project exists
 
