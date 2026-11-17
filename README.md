@@ -1,5 +1,11 @@
 # Fabric Lottery Data Platform
 
+<!-- showcase:start -->
+> **[▶ Live showcase](https://phlppgdfry.github.io/fabric-lottery-data-platform/)** — inspect real pipeline runs at 0%, 1% and 5% injected faults: rejects with reasons, the Gold star schema and reporting tables. Runs on DuckDB today; Fabric is next.
+
+[![Live showcase: fabric-lottery-data-platform](site/demo.png)](https://phlppgdfry.github.io/fabric-lottery-data-platform/)
+<!-- showcase:end -->
+
 > **Nederlands leren met deze repo:** [Start de leergids](docs/leren/README.md) — code stap voor stap, vaardigheden, oefeningen met antwoorden, herhaalkaarten en je eigen leerlogboek.
 > **Huidige status:** generator, SQL-ontwerp en een lokale Bronze → Silver → Gold-pipeline op DuckDB met tests en CI zijn aanwezig. Fabric-pipelines, PySpark-notebooks, Power BI en dbt zijn nog niet geïmplementeerd. De architectuur hieronder beschrijft mede het beoogde eindbeeld.
 

@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Fabric Lottery Data Platform — a medallion data platform, built and tested locally before Fabric</title>
+<meta name="description" content="Synthetic lottery data through Bronze, Silver and Gold: seeded generator with fault injection, quality rules with reject reasons, a star schema and reporting tables. Runs on DuckDB today; the Microsoft Fabric build is planned.">
+<link rel="canonical" href="https://phlppgdfry.github.io/fabric-lottery-data-platform/">
+<meta property="og:type" content="website"><meta property="og:title" content="Fabric Lottery Data Platform — a medallion data platform, built and tested locally before Fabric"><meta property="og:description" content="Synthetic lottery data through Bronze, Silver and Gold: seeded generator with fault injection, quality rules with reject reasons, a star schema and reporting tables. Runs on DuckDB today; the Microsoft Fabric build is planned.">
+<meta property="og:url" content="https://phlppgdfry.github.io/fabric-lottery-data-platform/"><meta property="og:image" content="https://phlppgdfry.github.io/fabric-lottery-data-platform/og.jpg"><meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0a0d12">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23a78bfa'/%3E%3C/svg%3E">
+<link rel="preload" href="assets/space-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/showcase.css">
+<style>:root{--brand:#a78bfa;--accent-ink:#0f0a1f}
+.fb-head{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.fb-med{display:flex;align-items:stretch;gap:8px}
+@media (max-width:700px){.fb-med{flex-direction:column}.fb-ar{transform:rotate(90deg)}}
+.fb-layer{flex:1;border-radius:12px;padding:14px;border:1px solid var(--line2);background:var(--bg2)}
+.fb-layer.b{border-top:4px solid #b08d57}.fb-layer.s{border-top:4px solid #c0c7d0}.fb-layer.g{border-top:4px solid #e5b93c}
+.fb-ln{font:600 12px var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.fb-n{font:700 30px/1.1 var(--mono);margin:6px 0}
+.fb-bad{color:var(--bad)}
+.fb-ar{display:grid;place-items:center;color:var(--dim);font-size:20px}
+.fb-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+.fb-grid>*{min-width:0}
+@media (max-width:900px){.fb-grid{grid-template-columns:1fr}}
+.fb-card{background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:14px}
+.fb-ct{font-size:13px;color:var(--muted);margin-bottom:10px}
+.fb-bar{display:grid;grid-template-columns:190px 1fr 50px;gap:8px;align-items:center;font-size:13px;margin:6px 0}
+.fb-bar i{display:block;height:12px;border-radius:3px;background:var(--bad);opacity:.8}
+.fb-bar b{text-align:right;font-weight:500}
+#fb-star{width:100%;height:auto}
+#fb-star .dim{fill:var(--card);stroke:var(--line2)} #fb-star .fact{fill:color-mix(in srgb,var(--accent) 18%,var(--card));stroke:var(--accent)}
+#fb-star .t{font:600 12px var(--mono);fill:var(--fg)} #fb-star .n{font:11px var(--mono);fill:var(--muted)}
+#fb-star .ln{stroke:var(--line2);stroke-width:2}
+#fb-month{width:100%;height:auto}
+#fb-month .mb{fill:var(--accent)} #fb-month .ax{font:10px var(--mono);fill:var(--dim)}
+#fb-games td{font-size:13px}
+</style>
+</head>
+<body>
+<div class="top"><div class="wrap">
+  <a class="brand" href="#"><i class="dot"></i><span>Fabric Lottery Data Platform</span></a>
+  <nav><a class="" href="#demo">Try it</a><a class="" href="#how">How it works</a><a class="hide-sm" href="#run">Run it</a><a href="https://github.com/phlppgdfry/fabric-lottery-data-platform" aria-label="GitHub repository">GitHub</a><button class="theme" type="button" aria-label="Toggle light or dark theme"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button></nav>
+</div></div>
+<main>
+<header class="hero"><div class="wrap grid">
+  <div>
+    <div class="kicker"><span>Data engineering · medallion · star schema</span><span class="chip status">In progress</span></div>
+    <h1>Every row is <em>either in Silver or rejected with a reason</em>.</h1>
+    <p class="lede">A data platform for synthetic lottery sales: players, games, retailers and 100,000 ticket purchases. The medallion layers, quality rules and star schema already run and are tested on DuckDB, so the design is proven before it moves to a Microsoft Fabric Lakehouse with PySpark, dbt and Power BI.</p>
+    <div class="ctas"><a class="btn primary" href="#demo"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg> Inspect a run</a><a class="btn" href="https://github.com/phlppgdfry/fabric-lottery-data-platform"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.42-2.7 5.39-5.26 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5Z"/></svg> Source on GitHub</a></div>
+    <div class="stack"><span class="chip">Python</span><span class="chip">DuckDB</span><span class="chip">SQL</span><span class="chip">Star schema</span><span class="chip">pytest</span><span class="chip">GitHub Actions</span><span class="chip">Microsoft Fabric (planned)</span><span class="chip">PySpark · dbt · Power BI (planned)</span></div>
+  </div>
+  <div class="hero-visual"><div class="frame"><div class="bar"><i></i><i></i><i></i><b>terminal</b></div><div class="code" style="border:0;border-radius:0"><button class="copy" type="button">Copy</button><pre><code>$ python data-generator/generate_data.py --dirty-rate 0.01
+Wrote 5,000 rows -&gt; players.csv
+Wrote 20 rows -&gt; games.csv
+Wrote 200 rows -&gt; retail_locations.csv
+Wrote 100,185 rows -&gt; transactions.csv
+
+$ python local/pipeline.py --summary local/summary.json
+<span class="c"># layers, from local/summary.json</span>
+bronze_transactions   100,185
+silver_transactions    99,173
+rejected                1,012   # each with a reason
+gold_fact_rows         99,173
+orphan_fact_keys            0</code></pre></div></div></div>
+</div></header>
+<section id="why"><div class="wrap">
+  <p class="eyebrow">Why it exists</p><h2>"Clean data" usually means nobody counted what was thrown away.</h2>
+  <div class="problem">
+    <div class="card before"><div class="label">Without it</div><p>Raw files are loaded straight into a reporting model. Re-delivered rows double the revenue, a typo in a key silently drops a sale from every join, and nobody can say how many records were lost between source and dashboard.</p></div>
+    <div class="card after"><div class="label">With it</div><p>Bronze keeps the source as delivered. Silver types, deduplicates and moves every invalid row to a reject table with its reason, so Bronze always equals Silver plus rejects. Gold is a star schema in which every fact key is checked against its dimension.</p></div>
+  </div>
+</div></section>
+<section id="demo"><div class="wrap">
+  <p class="eyebrow">Try it · runs in your browser</p><h2>Inspect a pipeline run</h2>
+  <p class="sub">Three real runs of <code>local/pipeline.py</code> on 100,000 generated purchases, without faults and with 1% or 5% injected source faults. Switch between them and watch the rejects, the star schema and the Gold outputs.</p>
+  <div class="demo"><div class="fb-head"><span class="small dim">Injected source faults (<code>--dirty-rate</code>):</span><div class="tabs" id="fb-rates" style="margin:0"></div></div>
+<div class="fb-med" id="fb-med"></div>
+<div class="fb-grid">
+  <div class="fb-card"><div class="fb-ct">Why rows were rejected in Silver</div><div id="fb-rej"></div><div id="fb-warn" class="small" style="margin-top:12px"></div></div>
+  <div class="fb-card"><div class="fb-ct">Gold star schema · row counts</div><svg id="fb-star" viewBox="0 0 460 260" role="img" aria-label="Star schema"></svg></div>
+</div>
+<div class="fb-grid">
+  <div class="fb-card"><div class="fb-ct">gold.daily_sales · revenue per month (€)</div><svg id="fb-month" role="img" aria-label="Monthly revenue"></svg></div>
+  <div class="fb-card"><div class="fb-ct">gold.game_performance · top games</div><div class="scroll-x"><table class="tbl" id="fb-games"></table></div></div>
+</div>
+</div>
+  <p class="note">Synthetic data only: no real players or sales. Revenue rises over time because more players have signed up by later months.</p>
+</div></section>
+<section id="how"><div class="wrap">
+  <p class="eyebrow">How it works</p><h2>Three layers, each with one job</h2>
+  
+  <div class="cards"><div class="card"><div class="ic">01</div><h3>Seeded, honest test data</h3><p>The generator is reproducible with <code>--seed</code> and can inject duplicates, bad amounts, unknown keys and broken timestamps on purpose with <code>--dirty-rate</code>.</p></div><div class="card"><div class="ic">02</div><h3>Bronze: as delivered</h3><p>Every column kept as text, with ingestion time and source file, so Silver and Gold can always be rebuilt.</p></div><div class="card"><div class="ic">03</div><h3>Silver: typed and judged</h3><p>Exact re-deliveries removed, invalid rows rejected with a reason, suspicious rows flagged for review instead of silently dropped.</p></div><div class="card"><div class="ic">04</div><h3>Gold: star schema and reports</h3><p>fact_transaction with player, game, location and date dimensions, plus daily_sales, game_performance and player_activity.</p></div></div>
+  <h3 style="margin:34px 0 14px">The flow, step by step</h3><div class="flow" role="list"><div class="node"><div class="n">01</div><b>Generator</b><small>players, games, retailers, transactions</small></div><div class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div><div class="node"><div class="n">02</div><b>Bronze</b><small>raw text + ingestion metadata</small></div><div class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div><div class="node hl"><div class="n">03</div><b>Silver</b><small>types, dedup, rejects with reasons</small></div><div class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div><div class="node"><div class="n">04</div><b>Gold</b><small>star schema + reporting tables</small></div><div class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div><div class="node"><div class="n">05</div><b>Next: Fabric</b><small>Lakehouse, PySpark, dbt, Power BI</small></div></div><p class="flow-note">Building it with fault injection exposed two flaws in the generator itself, now fixed: 18% of purchases happened before the player signed up, and transaction IDs ignored the seed.</p>
+</div></section>
+<section id="evidence"><div class="wrap">
+  <p class="eyebrow">Evidence</p><h2>What is real, and what is not</h2>
+  
+  <div class="metrics"><div class="metric"><div class="v">7</div><div class="l">end-to-end tests</div><div class="s">row conservation, each fault type, keys, reproducibility</div></div><div class="metric"><div class="v">0</div><div class="l">orphan fact keys</div><div class="s">every Gold fact resolves to its dimensions</div></div><div class="metric"><div class="v">&lt; 1 s</div><div class="l">full local run</div><div class="s">100,000 transactions on DuckDB</div></div></div>
+  <div class="honest" style="margin-top:18px">
+      <div class="card real"><h3><span class="pill ok">REAL</span> Built and verified</h3><ul><li>Seeded generator with optional fault injection</li><li>Bronze, Silver and Gold on DuckDB, with reject reasons and review flags</li><li>Star schema DDL, reference queries and Gold reporting tables</li><li>Seven pytest checks and a CI run on every push</li></ul></div>
+      <div class="card sim"><h3><span class="pill warn">SIMULATED</span> Mocked or not built yet</h3><ul><li>Microsoft Fabric is not used yet: no Lakehouse, PySpark notebooks or Fabric pipelines</li><li>dbt models, Power BI semantic model and deployment pipelines are not built</li><li>All data is synthetic lottery-style data</li></ul></div></div>
+</div></section>
+<section id="run"><div class="wrap two">
+  <div><p class="eyebrow">Run it yourself</p><h2>Run it locally</h2>
+  <p class="sub">Python 3.12+. Open <code>local/lottery.duckdb</code> in any DuckDB client to query the bronze, silver and gold schemas.</p>
+  <div class="code"><button class="copy" type="button">Copy</button><pre><code>git clone https://github.com/phlppgdfry/fabric-lottery-data-platform
+cd fabric-lottery-data-platform
+python3 -m venv .venv &amp;&amp; source .venv/bin/activate
+pip install -r requirements-dev.txt
+
+python data-generator/generate_data.py --dirty-rate 0.01
+python local/pipeline.py --db local/lottery.duckdb --summary local/summary.json
+pytest -q tests</code></pre></div></div>
+  <div><p class="eyebrow">Go deeper</p><h2>Read the source</h2>
+  <div class="links"><a href="https://github.com/phlppgdfry/fabric-lottery-data-platform"><span>Repository</span><span>github</span></a><a href="https://github.com/phlppgdfry/fabric-lottery-data-platform/blob/HEAD/local/pipeline.py"><span>Local pipeline</span><span>py</span></a><a href="https://github.com/phlppgdfry/fabric-lottery-data-platform/blob/HEAD/docs/data-model.md"><span>Data model</span><span>docs</span></a><a href="https://github.com/phlppgdfry/fabric-lottery-data-platform/blob/HEAD/docs/medallion.md"><span>Medallion layers</span><span>docs</span></a><a href="https://github.com/phlppgdfry/fabric-lottery-data-platform/blob/HEAD/sql/ddl/01_dimensions.sql"><span>Star schema DDL</span><span>sql</span></a><a href="https://github.com/phlppgdfry/fabric-lottery-data-platform/blob/HEAD/docs/leren/README.md"><span>Learning guide (Dutch)</span><span>nl</span></a></div></div>
+</div></section></main>
+<footer><div class="wrap">
+  <span>Fabric Lottery Data Platform · A portfolio project by Philippe Godfroy</span>
+  <span><a href="https://www.philippegodfroy.com/work">More projects</a> · <a href="https://github.com/phlppgdfry/fabric-lottery-data-platform">Source</a></span>
+</div></footer>
+<script src="assets/showcase.js"></script>
+<script src="assets/demo.js" type="module"></script>
+</body></html>
